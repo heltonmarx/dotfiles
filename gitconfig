@@ -1,0 +1,12 @@
+[diff]
+	tool = vimdiff
+[difftool "mvimdiff"]
+	cmd = vim -f -d \"$LOCAL\" \"$REMOTE\"
+[alias]
+	d = difftool
+[core]
+	editor = vim
+[mergetool]
+	prompt = false
+[difftool]
+	prompt = false

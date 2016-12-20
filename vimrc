@@ -71,11 +71,11 @@ NeoBundle 'honza/vim-snippets'
 
 "" Color
 NeoBundle 'tomasr/molokai'
-NeoBundle 'matthewtodd/vim-twilight'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'rainux/vim-desert-warm-256'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'toupeira/vim-desertink'
+NeoBundle 'aereal/vim-colors-japanesque'
+NeoBundle 'tyrannicaltoucan/vim-deep-space'
+NeoBundle 'morhetz/gruvbox'
+NeoBundle 'jacoborus/tender'
+NeoBundle 'roosta/srcery'
 
 "" Vim-Bootstrap Updater
 NeoBundle 'sherzberg/vim-bootstrap-updater'
@@ -94,9 +94,19 @@ endif
 NeoBundle "majutsushi/tagbar"
 NeoBundle "fatih/vim-go"
 NeoBundle "Shougo/neocomplete"
+NeoBundle 'gevans/vim-ginkgo'
+
+"" Vim syntax highlighting for Google's Protocol Buffers
+NeoBundle 'uarun/vim-protobuf'
 
 "" YAML Editor
-NeoBundle 'chase/vim-ansible-yaml'
+NeoBundle 'avakhov/vim-yaml'
+
+"" VIM-Vagrant
+NeoBundle 'hashivim/vim-vagrant'
+
+"" Octave
+NeoBundle 'jvirtanen/vim-octave'
 
 "" Include user's extra bundle
 if filereadable(expand("~/.vimrc.local.bundles"))
@@ -169,25 +179,25 @@ set number
 
 let no_buffers_menu=1
 if !exists('g:not_finsh_neobundle')
-	if &diff
-		set background=light
-		let g:solarized_termcolors=256
-		colorscheme solarized
-	else
-		set background=dark
-		colorscheme molokai
-	endif
+	set background=dark
+if has("gui_running")
+	colorscheme srcery
+else
+	colorscheme molokai
+endif
+
 endif
 
 set mousemodel=popup
 set t_Co=256
 set cursorline
 set guioptions=egmrti
-set gfn=Terminus\ Bold\ 8
 
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
-    set guifont=Menlo:h10
+	let macvim_skip_colorscheme=1
+	set guifont=Menlo:h10
+	"set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
     set transparency=7
   endif
 else
@@ -496,18 +506,18 @@ let g:tagbar_type_go = {
 
 " vim-go
 augroup FileType go
-  au!
-  au FileType go nmap gd <Plug>(go-def)
-  au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
+	au!
+	au FileType go nmap gd <Plug>(go-def)
+	au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
 
-  au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-  au FileType go nmap <Leader>db <Plug>(go-doc-browser)
+	au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
+	au FileType go nmap <Leader>db <Plug>(go-doc-browser)
 
-  au FileType go nmap <Leader>gi <Plug>(go-info)
+	au FileType go nmap <Leader>gi <Plug>(go-info)
 
-  au FileType go nmap <leader>gr <Plug>(go-run)
-  au FileType go nmap <leader>rb <Plug>(go-build)
-  au FileType go nmap <leader>gt <Plug>(go-test)
+	au FileType go nmap <leader>gr <Plug>(go-run)
+	au FileType go nmap <leader>rb <Plug>(go-build)
+	au FileType go nmap <leader>gt <Plug>(go-test)
 augroup END
 
 
@@ -523,16 +533,18 @@ endif
 let g:go_disable_autoinstall = 0
 let g:go_auto_type_info = 1
 let g:go_play_open_browser = 0
-let g:go_fmt_fail_silently = 1
+let g:go_fmt_fail_silently = 0
 let g:go_snippet_engine = "neosnippet"
 let g:go_fmt_command = "goimports"
-
 
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+
+let g:syntastic_go_checkers = ['golint', 'govet']
 
 " =============================================================================
 "       hide menu bar
@@ -546,11 +558,11 @@ endif
 " =============================================================================
 "       Neocomplete
 " =============================================================================
-" neocomplete
 set completeopt-=preview
 let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 let g:echodoc_enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 1
 let g:neocomplete#enable_auto_close_preview = 1
 
@@ -574,4 +586,10 @@ if !exists('g:neocomplete#keyword_patterns')
 endif
 let g:neocomplete#keyword_patterns['default'] = '[^.[:digit:] *\t]\.\w*'"}}}"
 
+" =============================================================================
+"       Nyan cat
+" =============================================================================
+if exists("*fugitive#statusline")
+	set statusline+=%{g:Catium()}
+endif
 
