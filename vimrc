@@ -71,11 +71,6 @@ NeoBundle 'honza/vim-snippets'
 
 "" Color
 NeoBundle 'tomasr/molokai'
-NeoBundle 'aereal/vim-colors-japanesque'
-NeoBundle 'tyrannicaltoucan/vim-deep-space'
-NeoBundle 'morhetz/gruvbox'
-NeoBundle 'jacoborus/tender'
-NeoBundle 'roosta/srcery'
 
 "" Vim-Bootstrap Updater
 NeoBundle 'sherzberg/vim-bootstrap-updater'
@@ -107,6 +102,9 @@ NeoBundle 'hashivim/vim-vagrant'
 
 "" Octave
 NeoBundle 'jvirtanen/vim-octave'
+
+"" Indent Line
+NeoBundle 'Yggdroot/indentLine'
 
 "" Include user's extra bundle
 if filereadable(expand("~/.vimrc.local.bundles"))
@@ -180,12 +178,7 @@ set number
 let no_buffers_menu=1
 if !exists('g:not_finsh_neobundle')
 	set background=dark
-if has("gui_running")
-	colorscheme srcery
-else
 	colorscheme molokai
-endif
-
 endif
 
 set mousemodel=popup
@@ -197,7 +190,6 @@ if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
 	let macvim_skip_colorscheme=1
 	set guifont=Menlo:h10
-	"set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
     set transparency=7
   endif
 else
@@ -587,9 +579,8 @@ endif
 let g:neocomplete#keyword_patterns['default'] = '[^.[:digit:] *\t]\.\w*'"}}}"
 
 " =============================================================================
-"       Nyan cat
+"      Indent Line
 " =============================================================================
-if exists("*fugitive#statusline")
-	set statusline+=%{g:Catium()}
-endif
-
+let g:indentLine_char = '¦'
+let g:indentLine_concealcursor = 'inc'
+let g:indentLine_conceallevel = 2
