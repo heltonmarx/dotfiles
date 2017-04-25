@@ -71,6 +71,7 @@ NeoBundle 'honza/vim-snippets'
 
 "" Color
 NeoBundle 'tomasr/molokai'
+NeoBundle 'dracula/vim'
 
 "" Vim-Bootstrap Updater
 NeoBundle 'sherzberg/vim-bootstrap-updater'
@@ -178,7 +179,12 @@ set number
 let no_buffers_menu=1
 if !exists('g:not_finsh_neobundle')
 	set background=dark
+if has("gui_running")
+	colorscheme dracula
+else
 	colorscheme molokai
+endif
+
 endif
 
 set mousemodel=popup
@@ -189,8 +195,8 @@ set guioptions=egmrti
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
 	let macvim_skip_colorscheme=1
-	set guifont=Menlo:h10
-    set transparency=7
+	set guifont=Monaco:h10 noanti
+" 	set transparency=7
   endif
 else
   let g:CSApprox_loaded = 1
