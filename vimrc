@@ -62,13 +62,6 @@ NeoBundle 'Shougo/vimproc.vim', {
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-session'
 
-"" Snippets
-if v:version >= 704
-  NeoBundle 'SirVer/ultisnips'
-endif
-
-NeoBundle 'honza/vim-snippets'
-
 "" Color
 NeoBundle 'tomasr/molokai'
 NeoBundle 'dracula/vim'
@@ -414,12 +407,6 @@ noremap <leader>b :CtrlPBuffer<CR>
 let g:ctrlp_map = '<leader>e'
 let g:ctrlp_open_new_file = 'r'
 
-" snippets
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit="vertical"
-
 " syntastic
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_error_symbol='✗'
@@ -557,6 +544,7 @@ endif
 "       Neocomplete
 " =============================================================================
 set completeopt-=preview
+
 let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 let g:echodoc_enable_at_startup = 1
@@ -577,7 +565,6 @@ if !exists('g:neocomplete#sources')
 endif
 let g:neocomplete#sources._ = []
 let g:neocomplete#sources.go = ['omni']
-let g:neocomplete#sources.rust = ['omni']
 
 if !exists('g:neocomplete#keyword_patterns')
 	let g:neocomplete#keyword_patterns = {}
@@ -590,3 +577,13 @@ let g:neocomplete#keyword_patterns['default'] = '[^.[:digit:] *\t]\.\w*'"}}}"
 let g:indentLine_char = '¦'
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 2
+
+" from:
+" 	https://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message
+"	ps: never use the -m flag to git commit.
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
+" disable F1 key
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
