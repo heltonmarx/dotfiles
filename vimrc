@@ -64,7 +64,6 @@ NeoBundle 'xolox/vim-session'
 
 "" Color
 NeoBundle 'tomasr/molokai'
-NeoBundle 'dracula/vim'
 
 "" Vim-Bootstrap Updater
 NeoBundle 'sherzberg/vim-bootstrap-updater'
@@ -93,12 +92,6 @@ NeoBundle 'avakhov/vim-yaml'
 
 "" VIM-Vagrant
 NeoBundle 'hashivim/vim-vagrant'
-
-"" Octave
-NeoBundle 'jvirtanen/vim-octave'
-
-"" Indent Line
-NeoBundle 'Yggdroot/indentLine'
 
 "" Include user's extra bundle
 if filereadable(expand("~/.vimrc.local.bundles"))
@@ -173,7 +166,7 @@ let no_buffers_menu=1
 if !exists('g:not_finsh_neobundle')
 	set background=dark
 if has("gui_running")
-	colorscheme dracula
+	colorscheme molokai
 else
 	colorscheme molokai
 endif
@@ -297,6 +290,7 @@ let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
+let g:NERDTreeShowHidden=1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <F3> :NERDTreeToggle<CR>
@@ -489,7 +483,9 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
-" vim-go
+" =============================================================================
+"   vim-go
+" =============================================================================
 augroup FileType go
 	au!
 	au FileType go nmap gd <Plug>(go-def)
@@ -505,16 +501,11 @@ augroup FileType go
 	au FileType go nmap <leader>gt <Plug>(go-test)
 augroup END
 
-
-
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
-" =============================================================================
-"   vim-go
-" ============================================================================="
 let g:go_disable_autoinstall = 0
 let g:go_auto_type_info = 1
 let g:go_play_open_browser = 0
@@ -530,6 +521,18 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
 let g:syntastic_go_checkers = ['golint', 'govet']
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+	let l:file = expand('%')
+	if l:file =~# '^\f\+_test\.go$'
+		call go#test#Test(0, 1)
+	elseif l:file =~# '^\f\+\.go$'
+		call go#cmd#Build(0)
+	endif
+endfunction
+
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 
 " =============================================================================
 "       hide menu bar
@@ -572,18 +575,7 @@ endif
 let g:neocomplete#keyword_patterns['default'] = '[^.[:digit:] *\t]\.\w*'"}}}"
 
 " =============================================================================
-"      Indent Line
+"  git commit
 " =============================================================================
-let g:indentLine_char = '¦'
-let g:indentLine_concealcursor = 'inc'
-let g:indentLine_conceallevel = 2
+autocmd Filetype gitcommit spell textwidth=72
 
-" from:
-" 	https://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message
-"	ps: never use the -m flag to git commit.
-autocmd Filetype gitcommit setlocal spell textwidth=72
-
-" disable F1 key
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
