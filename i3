@@ -30,7 +30,8 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec urxvt
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -190,4 +191,8 @@ bindsym $mod+q exec --no-startup-id xscreensaver-command -lock
 
 # wallpapers
 exec --no-startup-id feh --bg-scale --randomize ~/Pictures/Wallpapers
+
+# applications
+bindsym $mod+Shift+g exec --no-startup-id google-chrome
+bindsym $mod+Shift+n exec --no-startup-id nautilus
 
