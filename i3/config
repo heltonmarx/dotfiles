@@ -10,6 +10,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $term urxvt
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -21,6 +22,7 @@ font pango:monospace 8
 
 # Before i3 v4.8, we used to recommend this one as the default:
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# font -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, its unicode glyph coverage is limited, the old
 # X core fonts rendering does not support right-to-left and this being a bitmap
@@ -31,7 +33,7 @@ floating_modifier $mod
 
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec $term
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -187,7 +189,9 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # lock screen
+exec --no-startup-id xscreensaver -no-splash > /dev/null 2>&1
 bindsym $mod+q exec --no-startup-id xscreensaver-command -lock
+bindsym XF86Sleep exec xscreensaver-command -lock
 
 # wallpapers
 exec --no-startup-id feh --bg-scale --randomize ~/Pictures/Wallpapers
@@ -195,4 +199,17 @@ exec --no-startup-id feh --bg-scale --randomize ~/Pictures/Wallpapers
 # applications
 bindsym $mod+Shift+g exec --no-startup-id google-chrome
 bindsym $mod+Shift+n exec --no-startup-id nautilus
+
+# keyboard
+exec --no-startup-id setxkbmap -layout us -variant intl
+
+# bluetooth manager
+exec --no-startup-id /usr/bin/blueman-applet
+
+# applet
+exec --no-startup-id nm-applet
+
+# printscreen
+bindsym Print exec "scrot -e 'mv $f ~/Screenshots'"
+bindsym $mod+Print exec "scrot -ue 'mv $f ~/Screenshots'"
 
