@@ -182,7 +182,8 @@ if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
 	let macvim_skip_colorscheme=1
 	set guifont=Monaco:h10 noanti
-" 	set transparency=7
+  else
+	set guifont=Terminus\ Regular\ 10
   endif
 else
   let g:CSApprox_loaded = 1
@@ -573,9 +574,4 @@ if !exists('g:neocomplete#keyword_patterns')
 	let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '[^.[:digit:] *\t]\.\w*'"}}}"
-
-" =============================================================================
-"  git commit
-" =============================================================================
-autocmd Filetype gitcommit spell textwidth=72
 
