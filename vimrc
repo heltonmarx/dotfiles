@@ -82,16 +82,10 @@ endif
 NeoBundle "majutsushi/tagbar"
 NeoBundle "fatih/vim-go"
 NeoBundle "Shougo/neocomplete"
-NeoBundle 'gevans/vim-ginkgo'
 
 "" Vim syntax highlighting for Google's Protocol Buffers
 NeoBundle 'uarun/vim-protobuf'
 
-"" YAML Editor
-NeoBundle 'avakhov/vim-yaml'
-
-"" VIM-Vagrant
-NeoBundle 'hashivim/vim-vagrant'
 
 "" Include user's extra bundle
 if filereadable(expand("~/.vimrc.local.bundles"))
@@ -149,6 +143,9 @@ set fileformats=unix,dos,mac
 set showcmd
 set shell=/bin/sh
 
+"" Colour at column 80
+set colorcolumn=80
+
 " session management
 let g:session_directory = "~/.vim/session"
 let g:session_autoload = "no"
@@ -165,25 +162,19 @@ set number
 let no_buffers_menu=1
 if !exists('g:not_finsh_neobundle')
 	set background=dark
-if has("gui_running")
 	colorscheme molokai
-else
-	colorscheme molokai
-endif
-
 endif
 
 set mousemodel=popup
 set t_Co=256
 set cursorline
 set guioptions=egmrti
+set gfn=Monospace\ 10
 
 if has("gui_running")
   if has("gui_mac") || has("gui_macvim")
-	let macvim_skip_colorscheme=1
-	set guifont=Monaco:h10 noanti
-  else
-	set guifont=Terminus\ Regular\ 10
+	  set guifont=Roboto\ Mono\ Light\ for\ Powerline:h12
+    set transparency=7
   endif
 else
   let g:CSApprox_loaded = 1
@@ -291,7 +282,6 @@ let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
-let g:NERDTreeShowHidden=1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 noremap <F3> :NERDTreeToggle<CR>
@@ -484,29 +474,32 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
-" =============================================================================
-"   vim-go
-" =============================================================================
+" vim-go
 augroup FileType go
-	au!
-	au FileType go nmap gd <Plug>(go-def)
-	au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
+  au!
+  au FileType go nmap gd <Plug>(go-def)
+  au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
 
-	au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-	au FileType go nmap <Leader>db <Plug>(go-doc-browser)
+  au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
+  au FileType go nmap <Leader>db <Plug>(go-doc-browser)
 
-	au FileType go nmap <Leader>gi <Plug>(go-info)
+  au FileType go nmap <Leader>gi <Plug>(go-info)
 
-	au FileType go nmap <leader>gr <Plug>(go-run)
-	au FileType go nmap <leader>rb <Plug>(go-build)
-	au FileType go nmap <leader>gt <Plug>(go-test)
+  au FileType go nmap <leader>gr <Plug>(go-run)
+  au FileType go nmap <leader>rb <Plug>(go-build)
+  au FileType go nmap <leader>gt <Plug>(go-test)
 augroup END
+
+
 
 "" Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
+" =============================================================================
+"   vim-go
+" ============================================================================="
 let g:go_disable_autoinstall = 0
 let g:go_auto_type_info = 1
 let g:go_play_open_browser = 0
@@ -514,26 +507,12 @@ let g:go_fmt_fail_silently = 0
 let g:go_snippet_engine = "neosnippet"
 let g:go_fmt_command = "goimports"
 
+
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
-let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
-
-let g:syntastic_go_checkers = ['golint', 'govet']
-
-" run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-	let l:file = expand('%')
-	if l:file =~# '^\f\+_test\.go$'
-		call go#test#Test(0, 1)
-	elseif l:file =~# '^\f\+\.go$'
-		call go#cmd#Build(0)
-	endif
-endfunction
-
-autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 
 " =============================================================================
 "       hide menu bar
@@ -547,12 +526,11 @@ endif
 " =============================================================================
 "       Neocomplete
 " =============================================================================
+" neocomplete
 set completeopt-=preview
-
 let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 let g:echodoc_enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 1
 let g:neocomplete#enable_auto_close_preview = 1
 
@@ -569,6 +547,7 @@ if !exists('g:neocomplete#sources')
 endif
 let g:neocomplete#sources._ = []
 let g:neocomplete#sources.go = ['omni']
+let g:neocomplete#sources.rust = ['omni']
 
 if !exists('g:neocomplete#keyword_patterns')
 	let g:neocomplete#keyword_patterns = {}
