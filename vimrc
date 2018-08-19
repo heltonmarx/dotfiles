@@ -86,6 +86,8 @@ NeoBundle "Shougo/neocomplete"
 "" Vim syntax highlighting for Google's Protocol Buffers
 NeoBundle 'uarun/vim-protobuf'
 
+"" YAML Editor
+NeoBundle 'avakhov/vim-yaml'
 
 "" Include user's extra bundle
 if filereadable(expand("~/.vimrc.local.bundles"))
